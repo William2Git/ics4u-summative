@@ -1,0 +1,134 @@
+.profile,
+.checklist {
+    background-color: #141414;
+    /* Dark background color similar to Netflix */
+    color: white;
+    /* White text for contrast */
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    /* Subtle shadow for depth */
+    max-width: 500px;
+    /* Restrict width */
+    margin: 0 auto;
+    /* Center the profile section */
+}
+
+.checklist p {
+    width: 100%;
+    padding: 12px;
+    color: white;
+    font-size: 22px;
+    font-weight: bold;
+}
+
+.genre-name {
+    width: 100%;
+    padding: 12px;
+    color: white;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.checklist input[type="checkbox"] {
+    transform: scale(1.5);
+}
+
+.checklist label.genre-name {
+    font-size: 20px;
+    /* Optional: increase label font size for better readability */
+}
+
+.checklist h2 {
+    color: rgb(194, 39, 39);
+    text-align: center;
+    font-size: 25px;
+}
+
+.profile h1 {
+    font-size: 36px;
+    /* Big heading for the page title */
+    font-weight: bold;
+    margin-bottom: 20px;
+    /* Space between title and form */
+    color: #e50914;
+}
+
+.names,
+.profile {
+    display: flex;
+    flex-direction: column;
+    /* Stack labels and inputs */
+    gap: 15px;
+}
+
+.names label,
+.profile label {
+    font-size: 16px;
+    font-weight: bold;
+    color: #bbb;
+    /* Lighter text for labels */
+}
+
+.names input,
+.profile input {
+    padding: 12px;
+    font-size: 16px;
+    border-radius: 5px;
+    border: 2px solid #333;
+    background-color: #333;
+    color: white;
+    width: 100%;
+    /* Ensure inputs take full width */
+    transition: border 0.3s ease;
+}
+
+.names input:focus,
+.profile input:focus {
+    border-color: #e50914;
+    /* Highlight border on focus */
+    outline: none;
+}
+
+.names button,
+.checklist button {
+    background-color: #e50914;
+    color: white;
+    font-size: 16px;
+    width: 300px;
+    height: 50px;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-weight: bold;
+}
+
+.names button:hover,
+.checklist button {
+    background-color: #b20710;
+    /* Darker red when hovered */
+}
+
+.names button:focus,
+.checklist button:focus {
+    outline: none;
+}
+
+.names input[readonly] {
+    background-color: #2e2e2e;
+    cursor: not-allowed;
+    /* Show that this input is readonly */
+}
+
+.names input[readonly]:hover {
+    border-color: #2e2e2e;
+    /* No hover effect on readonly input */
+}
+
+.settings {
+    display: flex;
+    width: 1000px;
+    margin: auto;
+}

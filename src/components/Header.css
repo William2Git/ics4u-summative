@@ -1,0 +1,32 @@
+/* Navigation bar buttons */
+.navbar {
+    display: flex;
+    background-color: black;
+    justify-content: space-between;
+    height: 75px;
+    width: 100%
+}
+
+h1 {
+    color: rgb(194, 39, 39);
+    text-align: center;
+    padding-top: 15px;
+    padding-left: 20px;
+
+}
+
+button {
+    border: none;
+    background-color: black;
+    color: rgb(194, 39, 39);
+    font-size: 20px;
+    width: 100px;
+    height: 100%;
+    cursor: pointer;
+    transition-duration: 0.5s;
+
+}
+
+button:hover {
+    color: white;
+}
