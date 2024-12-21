@@ -14,11 +14,13 @@ export const StoreProvider = ({ children }) => {
     const [loggedIn, setLoggedIn] = useState(false);
     const [choices, setChoices] = useState([]);
     const [defaultGenre, setDefaultGenre] = useState(28);
+    const [user, setUser] = useState(null);
 
     return (
         <StoreContext.Provider value={{
             firstName, setFirstName, lastName, setLastName, email, setEmail,
-            password, setPassword, cart, setCart, choices, setChoices, loggedIn, setLoggedIn, defaultGenre, setDefaultGenre
+            password, setPassword, cart, setCart, choices, setChoices, loggedIn, setLoggedIn, defaultGenre, setDefaultGenre,
+            user, setUser
         }}>
             {children}
         </StoreContext.Provider>
