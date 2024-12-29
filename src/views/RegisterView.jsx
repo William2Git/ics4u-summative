@@ -11,7 +11,7 @@ import { auth } from "../firebase";
 
 function RegisterView() {
   const navigate = useNavigate();
-  const { setChoices, setLoggedIn, setDefaultGenre, setCart } = useStoreContext();
+  const { setChoices, setDefaultGenre, setCart } = useStoreContext();
   const { user, setUser } = useStoreContext();
   const firstName = useRef('');
   const lastName = useRef('');
@@ -41,7 +41,6 @@ function RegisterView() {
     event.preventDefault();
 
     try {
-      //change this
       if (password.current.value != checkPassword) {
         return alert("Passwords do not match. Please re-enter your password correctly");
       }
@@ -51,8 +50,7 @@ function RegisterView() {
         .map(Number);
 
       if (selectedGenres.length < 10) {
-        alert("Please select at least 10 genres!");
-        return;
+        return alert("Please select at least 10 genres!");
       }
 
       const sortedGenres = selectedGenres
@@ -64,7 +62,6 @@ function RegisterView() {
       setUser(user);
       console.log(user);
 
-      setLoggedIn(true);
       setChoices(sortedGenres);
       setDefaultGenre(sortedGenres[0].id);
       //resets cart to empty upon registration
@@ -99,8 +96,8 @@ function RegisterView() {
     try {
       const user = (await signInWithPopup(auth, new GoogleAuthProvider())).user;
       setUser(user);
+      console.log(user);
 
-      setLoggedIn(true);
       setChoices(sortedGenres);
       setDefaultGenre(sortedGenres[0].id);
       //resets cart to empty upon registration

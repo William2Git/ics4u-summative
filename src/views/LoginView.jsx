@@ -14,18 +14,6 @@ function LoginView() {
   const { setUser } = useStoreContext();
   const navigate = useNavigate();
 
-  // function login(event) {
-  //   event.preventDefault();
-  //   if (user == "") {
-  //     return alert("Please enter an email");
-  //   }
-  //   if (user != email || pass != password) {
-  //     return alert("Incorrect login credentials, please try again");
-  //   }
-  //   setLoggedIn(true);
-  //   return navigate("/movies/genre/28");
-  // }
-
   async function loginByEmail(event) {
     event.preventDefault();
 
@@ -33,6 +21,8 @@ function LoginView() {
       const user = (await signInWithEmailAndPassword(auth, email, pass)).user;
       navigate('/movies/genre/28');
       setUser(user);
+
+      console.log(user);
     } catch (error) {
       console.log(error);
       alert("Invalid credentials, please try again");
@@ -44,6 +34,8 @@ function LoginView() {
       const user = (await signInWithPopup(auth, new GoogleAuthProvider())).user;
       navigate('/movies/genre/28');
       setUser(user);
+
+      console.log(user);
     } catch (error) {
       console.log(error);
       alert("Error signing in!");

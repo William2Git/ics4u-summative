@@ -11,13 +11,12 @@ export const StoreProvider = ({ children }) => {
     const [cart, setCart] = useState(Map());
     const [prevPurchases, setPrevPurchases] = useState(null)
 
-    const [loggedIn, setLoggedIn] = useState(false);
     const [defaultGenre, setDefaultGenre] = useState(28);
     
 
     return (
         <StoreContext.Provider value={{
-            cart, setCart, choices, setChoices, loggedIn, setLoggedIn, defaultGenre, setDefaultGenre, 
+            cart, setCart, choices, setChoices, defaultGenre, setDefaultGenre, 
             user, setUser, prevPurchases, setPrevPurchases
         }}>
             {children}
