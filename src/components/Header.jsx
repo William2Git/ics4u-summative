@@ -1,16 +1,23 @@
 import "./Header.css";
 import { useNavigate } from "react-router";
 import { useStoreContext } from "../context";
+import { signOut } from "firebase/auth";
+import { auth } from '../firebase';
 
 function Header() {
   let navigate = useNavigate();
   const { defaultGenre } = useStoreContext();
   const { user, setUser } = useStoreContext();
 
-  function logout() {
-    setUser(null);
-    console.log(user);
-    navigate("/login");
+  async function logout() {
+    try {
+      await signOut(auth);
+      setUser(null);
+      console.log(user);
+      navigate("/login");
+    } catch (error) {
+      alert("Error signing out");
+    }
   }
 
   function movies() {
@@ -47,7 +54,7 @@ function Header() {
         )}
 
       </div >
-      {user ? (
+      {user && user.displayName ? (
         <h1>Welcome to WStream4U, {user.displayName.split(" ")[0]}!</h1>
       ) : (
         <></>
