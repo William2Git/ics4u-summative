@@ -5,9 +5,10 @@ import { useState, useRef } from "react";
 import { useStoreContext } from "../context";
 
 function SettingsView() {
-    const { email, firstName, lastName, choices, setChoices, setDefaultGenre, setFirstName, setLastName } = useStoreContext();
-    const [fName, setfName] = useState(firstName);
-    const [lName, setlName] = useState(lastName);
+    const { choices, setChoices, setDefaultGenre } = useStoreContext();
+    const { user, setUser } = useStoreContext();
+    const [fName, setfName] = useState(user.displayName.split(" ")[0]);
+    const [lName, setlName] = useState(user.displayName.split(" ")[1]);
     const genres = [
         { id: 28, genre: "Action" },
         { id: 12, genre: "Adventure" },
@@ -29,11 +30,12 @@ function SettingsView() {
 
     function changeName(event) {
         event.preventDefault();
-        if (fName == firstName && lName == lastName) {
+        if (fName == user.displayName.split(" ")[0] && lName == user.displayName.split(" ")[1]) {
             return alert("No changes were made. Please input the changes you want before clicking this button.")
         }
-        setFirstName(fName);
-        setLastName(lName);
+        user.displayName = `${fName} ${lName}`
+        console.log(user);
+        setUser(user);
         alert("Name has been successfully changed!");
     }
 
@@ -70,7 +72,7 @@ function SettingsView() {
                         <button>Change First Name or Last Name</button>
                     </form>
                     <label>Email:</label>
-                    <input type="email" style={{ cursor: "no-drop" }} value={email} readOnly ></input>
+                    <input type="email" style={{ cursor: "no-drop" }} value={user.email} readOnly ></input>
                 </div>
                 <div className="checklist">
                     <h2>Genres</h2>

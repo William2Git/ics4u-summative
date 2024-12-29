@@ -3,7 +3,7 @@ body {
     color: white;
 }
 
-#contents {
+.login-form {
     margin: auto;
     display: flex;
     flex-direction: column;
@@ -18,12 +18,12 @@ body {
     margin-bottom: 150px;
 }
 
-#contents h2 {
+#login-email h2 {
     color: rgb(194, 39, 39);
     text-align: center;
 }
 
-#contents label {
+#login-email label {
     font-size: 20px;
     font-weight: bold;
     color: white;
@@ -32,7 +32,7 @@ body {
     text-align: left;
 }
 
-#contents input {
+#login-email input {
     width: 100%;
     padding: 12px;
     margin-bottom: 15px;
@@ -44,7 +44,7 @@ body {
     font-weight: bold;
 }
 
-#contents input:focus {
+#login-email input:focus {
     outline: none;
     border-color: rgb(194, 39, 39);
 }

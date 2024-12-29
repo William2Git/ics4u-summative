@@ -4,7 +4,8 @@ import { useStoreContext } from "../context";
 
 function Header() {
   let navigate = useNavigate();
-  const { loggedIn, setLoggedIn, firstName, defaultGenre } = useStoreContext();
+  const { loggedIn, setLoggedIn, defaultGenre } = useStoreContext();
+  const { user, setUser } = useStoreContext();
 
   function logout() {
     setLoggedIn(false);
@@ -46,7 +47,7 @@ function Header() {
 
       </div >
       {loggedIn ? (
-        <h1>Welcome to WStream4U, {firstName}!</h1>
+        <h1>Welcome to WStream4U, {user.displayName.split(" ")[0]}!</h1>
       ) : (
         <></>
       )}

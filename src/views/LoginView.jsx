@@ -4,38 +4,67 @@ import Footer from "../components/Footer.jsx";
 import { useNavigate } from "react-router";
 import { useState } from 'react';
 import { useStoreContext } from "../context";
+import { signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
+import { auth } from '../firebase';
 
 
 function LoginView() {
-  let [user, setUser] = useState("");
+  let [email, setEmail] = useState("");
   let [pass, setPass] = useState("");
-  const { email, password, setLoggedIn } = useStoreContext();
+  const { setUser } = useStoreContext();
   const navigate = useNavigate();
 
-  function login(event) {
+  // function login(event) {
+  //   event.preventDefault();
+  //   if (user == "") {
+  //     return alert("Please enter an email");
+  //   }
+  //   if (user != email || pass != password) {
+  //     return alert("Incorrect login credentials, please try again");
+  //   }
+  //   setLoggedIn(true);
+  //   return navigate("/movies/genre/28");
+  // }
+
+  async function loginByEmail(event) {
     event.preventDefault();
-    if (user == "") {
-      return alert("Please enter an email");
+
+    try {
+      const user = (await signInWithEmailAndPassword(auth, email, pass)).user;
+      navigate('/movies/genre/28');
+      setUser(user);
+    } catch (error) {
+      console.log(error);
+      alert("Invalid credentials, please try again");
     }
-    if (user != email || pass != password) {
-      return alert("Incorrect login credentials, please try again");
+  }
+
+  async function loginByGoogle() {
+    try {
+      const user = (await signInWithPopup(auth, new GoogleAuthProvider())).user;
+      navigate('/movies/genre/28');
+      setUser(user);
+    } catch (error) {
+      console.log(error);
+      alert("Error signing in!");
     }
-    setLoggedIn(true);
-    return navigate("/movies/genre/28");
   }
 
   return (
     <div>
       <Header />
-      <form id="contents" onSubmit={(event) => { login(event) }}>
-        <h2>Login</h2>
-        <br></br>
-        <label>Email:</label>
-        <input type="email" value={user} onChange={(event) => setUser(event.target.value.trim())}></input>
-        <label>Password:</label>
-        <input type="password" value={pass} onChange={(event => setPass(event.target.value))}></input>
-        <button id="enter" style={{ cursor: 'pointer' }}>Login</button>
-      </form>
+      <div className="login-form">
+        <form id="login-email" onSubmit={(event) => { loginByEmail(event) }}>
+          <h2>Login</h2>
+          <br></br>
+          <label>Email:</label>
+          <input type="email" value={email} onChange={(event) => setEmail(event.target.value.trim())}></input>
+          <label>Password:</label>
+          <input type="password" value={pass} onChange={(event => setPass(event.target.value))}></input>
+          <button id="enter" style={{ cursor: 'pointer' }}>Login</button>
+        </form>
+        <button id="enter" style={{ cursor: 'pointer' }} onClick={() => loginByGoogle()}>Login with Google</button>
+      </div>
       <Footer />
     </div>
 

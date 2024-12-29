@@ -11,7 +11,7 @@ import { auth } from "../firebase";
 
 function RegisterView() {
   const navigate = useNavigate();
-  const { setFirstName, setLastName, setEmail, setPassword, setChoices, setLoggedIn, setDefaultGenre, setCart } = useStoreContext();
+  const { setChoices, setLoggedIn, setDefaultGenre, setCart } = useStoreContext();
   const { user, setUser } = useStoreContext();
   const firstName = useRef('');
   const lastName = useRef('');
@@ -37,76 +37,43 @@ function RegisterView() {
     { id: 37, genre: "Western" }
   ];
 
-  function register(event) {
-    event.preventDefault();
-    if (password.current.value != checkPassword) {
-      return alert("Passwords do not match. Please re-enter your password correctly");
-    }
-
-    const selectedGenres = Object.keys(checkboxesRef.current)
-      .filter((genreId) => checkboxesRef.current[genreId].checked)
-      .map(Number);
-
-    if (selectedGenres.length < 10) {
-      alert("Please select at least 10 genres!");
-      return;
-    }
-
-    const sortedGenres = selectedGenres
-      .map((genreId) => genres.find((genre) => genre.id === genreId))
-      .sort((a, b) => a.genre.localeCompare(b.genre));
-
-    alert("Account Successfully Created")
-    setFirstName(firstName.current.value);
-    setLastName(lastName.current.value);
-    setEmail(email.current.value);
-    setPassword(password.current.value);
-    setLoggedIn(true);
-    setChoices(sortedGenres);
-    setDefaultGenre(sortedGenres[0].id);
-    //resets cart to empty upon registration
-    setCart(Map());
-    navigate(`/movies/genre/${sortedGenres[0].id}`);
-  }
-
   const registerByEmail = async (event) => {
     event.preventDefault();
 
     try {
-      const user = (await createUserWithEmailAndPassword(auth, email.current.value, password.current.value)).user;
-      await updateProfile(user, { displayName: `${firstName.current.value} ${lastName.current.value}` });
-      setUser(user);
       //change this
       if (password.current.value != checkPassword) {
         return alert("Passwords do not match. Please re-enter your password correctly");
       }
-  
+
       const selectedGenres = Object.keys(checkboxesRef.current)
         .filter((genreId) => checkboxesRef.current[genreId].checked)
         .map(Number);
-  
+
       if (selectedGenres.length < 10) {
         alert("Please select at least 10 genres!");
         return;
       }
 
-      alert("Account Successfully Created")
-      setFirstName(firstName.current.value);
-      setLastName(lastName.current.value);
-      setEmail(email.current.value);
-      setPassword(password.current.value);
-      setLoggedIn(true);
-      
       const sortedGenres = selectedGenres
-      .map((genreId) => genres.find((genre) => genre.id === genreId))
-      .sort((a, b) => a.genre.localeCompare(b.genre));
+        .map((genreId) => genres.find((genre) => genre.id === genreId))
+        .sort((a, b) => a.genre.localeCompare(b.genre));
+
+      const user = (await createUserWithEmailAndPassword(auth, email.current.value, password.current.value)).user;
+      await updateProfile(user, { displayName: `${firstName.current.value} ${lastName.current.value}` });
+      setUser(user);
+      console.log(user);
+
+      setLoggedIn(true);
       setChoices(sortedGenres);
       setDefaultGenre(sortedGenres[0].id);
       //resets cart to empty upon registration
       setCart(Map());
 
       navigate(`/movies/genre/${sortedGenres[0].id}`);
-      
+
+      alert("Account Successfully Created")
+
     } catch (error) {
       alert("Error creating user with email and password!");
       console.log(error);
@@ -115,10 +82,33 @@ function RegisterView() {
   };
 
   const registerByGoogle = async () => {
+
+    const selectedGenres = Object.keys(checkboxesRef.current)
+      .filter((genreId) => checkboxesRef.current[genreId].checked)
+      .map(Number);
+
+    if (selectedGenres.length < 10) {
+      alert("Please select at least 10 genres before registering!");
+      return;
+    }
+
+    const sortedGenres = selectedGenres
+      .map((genreId) => genres.find((genre) => genre.id === genreId))
+      .sort((a, b) => a.genre.localeCompare(b.genre));
+
     try {
       const user = (await signInWithPopup(auth, new GoogleAuthProvider())).user;
       setUser(user);
-      navigate('/movies/genre/28');
+
+      setLoggedIn(true);
+      setChoices(sortedGenres);
+      setDefaultGenre(sortedGenres[0].id);
+      //resets cart to empty upon registration
+      setCart(Map());
+
+      navigate(`/movies/genre/${sortedGenres[0].id}`);
+
+      alert("Account Successfully Created")
     } catch {
       alert("Error creating user with email and password!");
     }
