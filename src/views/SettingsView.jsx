@@ -81,7 +81,7 @@ function SettingsView() {
           {/* checks if the user signed in with google */}
           {user.emailVerified ? (
             <div className="names">
-              <h2>You signed in with Google</h2>
+              <h2>Your signed in with Google</h2>
               <label>First Name:</label>
               <input type="text" value={fName} readOnly></input>
               <label>Last Name:</label>

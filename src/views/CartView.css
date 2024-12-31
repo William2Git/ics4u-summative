@@ -2,8 +2,8 @@
     background-color: #141414;
     font-family: Arial, sans-serif;
     color: white;
-    text-align: center;
     margin-top: 50px;
+    text-align: center;
 }
 
 .cart-view h1 {
@@ -53,6 +53,40 @@
 }
 
 .cart-item button {
+    background-color: rgb(194, 39, 39);
+    color: white;
+    padding: 8px 16px;
+    font-size: 14px;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 10px 0 20px 0;
+    transition: background-color 0.3s ease;
+    text-transform: uppercase;
+    display: inline-block;
+    width: auto;
+    height: 50px;
+}
+
+#checkout {
+    background-color: rgb(194, 39, 39);
+    color: white;
+    padding: 8px 16px;
+    font-size: 14px;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 10px 0 20px 0;
+    transition: background-color 0.3s ease;
+    text-transform: uppercase;
+    display: inline-block;
+    width: auto;
+    height: 50px;
+}
+
+#checkout {
     background-color: rgb(194, 39, 39);
     color: white;
     padding: 8px 16px;

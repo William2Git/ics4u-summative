@@ -20,15 +20,14 @@ export const StoreProvider = ({ children }) => {
 		onAuthStateChanged(auth, user => {
 			if (user) {
 				setUser(user);
+				const sessionCart = localStorage.getItem(user.uid);
+				if (sessionCart) {
+					setCart(Map(JSON.parse(sessionCart)));
+				}
 			}
 			setLoading(false);
 		});
 	}, [])
-
-	// const sessionCart = localStorage.getItem(user.uid);
-	// if (sessionCart) {
-	//     setCart(Map(JSON.parse(sessionCart)));
-	// }
 
 	if (loading) {
 		return <h1>Loading...</h1>

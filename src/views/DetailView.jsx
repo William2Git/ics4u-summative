@@ -7,8 +7,16 @@ import { useStoreContext } from "../context";
 function DetailView() {
   const [movDetails, setMovDetails] = useState([]);
   const [production, setProduction] = useState([]);
-  const { cart, setCart } = useStoreContext();
+  const { user, cart, setCart } = useStoreContext();
   const params = useParams();
+
+  const addToCart = (id, title, poster) => {
+    setCart((prevCart) => {
+      const cart = prevCart.set(id+"", { title: title, url: poster });
+      localStorage.setItem(user.uid, JSON.stringify(cart.toJS()));
+      return cart;
+    });
+  }
 
   useEffect(() => {
     (async function getGenre() {
@@ -60,7 +68,7 @@ function DetailView() {
   return (
     <div>
       <h4>{movDetails.original_title}</h4>
-      <button onClick={() => setCart((prevCart) => prevCart.set(params.id + "", { title: movDetails.original_title, url: movDetails.poster_path }))}
+      <button onClick={() => addToCart(params.id, movDetails.original_title, movDetails.poster_path)}
         className="buy-button">{cart.has(params.id + "") ? "Added" : "Buy"}</button>
       <p id="detail">Release Date: {movDetails.release_date}</p>
       <p id="detail">Runtime: {movDetails.runtime} mins</p>
