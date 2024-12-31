@@ -19,9 +19,9 @@ function LoginView() {
 
     try {
       const user = (await signInWithEmailAndPassword(auth, email, pass)).user;
-      navigate('/movies/genre/28');
       setUser(user);
-
+      navigate('/movies/genre/28');
+      
       console.log(user);
     } catch (error) {
       console.log(error);
@@ -32,8 +32,8 @@ function LoginView() {
   async function loginByGoogle() {
     try {
       const user = (await signInWithPopup(auth, new GoogleAuthProvider())).user;
-      navigate('/movies/genre/28');
       setUser(user);
+      navigate('/movies/genre/28');
 
       console.log(user);
     } catch (error) {

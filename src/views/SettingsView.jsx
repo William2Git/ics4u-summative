@@ -6,7 +6,7 @@ import { useStoreContext } from "../context";
 import { updateProfile } from "firebase/auth";
 
 function SettingsView() {
-  const { choices, setChoices, setDefaultGenre } = useStoreContext();
+  const { choices, setChoices, setDefaultGenre, prevPurchases, cart } = useStoreContext();
   const { user, setUser } = useStoreContext();
   const [fName, setfName] = useState(user.displayName.split(" ")[0]);
   const [lName, setlName] = useState(user.displayName.split(" ")[1]);
@@ -120,6 +120,28 @@ function SettingsView() {
           })}
           <br></br>
           <button onClick={() => updateGenres()}>Update Your Genres</button>
+        </div>
+        <div className="previous-purchases">
+          <h2>Previous Purchases</h2>
+          {prevPurchases.entrySeq().map(([key, value]) => {
+              return (
+                <div key={key}>
+                  <li>{value.title}</li>
+                  <img src={`https://image.tmdb.org/t/p/w500${value.url}`} height={"200px"} />
+                </div>
+              )
+            })}
+          {/* {cart & cart.length >0 ? (
+            prevPurchases.entrySeq().map((purchase) => {
+              return (
+                <li key={purchase.id} style={{ cursor: 'pointer' }}>{purchase}</li>
+              );
+            })
+            
+          ):(
+            <p>No previous purchases</p>
+          )} */}
+          
         </div>
       </div>
       <Footer />

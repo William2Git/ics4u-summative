@@ -4,11 +4,26 @@ import Header from "../components/Header.jsx";
 import Footer from "../components/Footer.jsx";
 import { firestore } from "../firebase";
 import { doc, setDoc } from "firebase/firestore";
+import { Map } from 'immutable';
 
 function CartView() {
-  const { user, cart, setCart } = useStoreContext();
+  const { user, cart, setCart, prevPurchases, setPrevPurchases } = useStoreContext();
 
-  
+  const checkout = async () => {
+    setPrevPurchases(cart);
+    //adds cart to firestore
+    const docRef = doc(firestore, "users", user.uid);
+    console.log(docRef);
+    console.log(firestore);
+    await setDoc(docRef, cart.toJS());
+    //removes from local storage and react context
+    localStorage.removeItem(user.uid);
+    console.log(cart);
+    console.log(prevPurchases);
+    setCart(Map());
+    
+    alert("Thank you for your purchase!");
+  }
 
   return (
     <div>

@@ -65,7 +65,7 @@ function RegisterView() {
       setChoices(sortedGenres);
       setDefaultGenre(sortedGenres[0].id);
       //resets cart to empty upon registration
-      setCart(Map());
+      // setCart(Map());
 
       navigate(`/movies/genre/${sortedGenres[0].id}`);
 
@@ -101,7 +101,7 @@ function RegisterView() {
       setChoices(sortedGenres);
       setDefaultGenre(sortedGenres[0].id);
       //resets cart to empty upon registration
-      setCart(Map());
+      // setCart(Map());
 
       navigate(`/movies/genre/${sortedGenres[0].id}`);
 

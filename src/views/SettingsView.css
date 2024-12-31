@@ -1,5 +1,5 @@
 .profile,
-.checklist {
+.checklist, .previous-purchases {
     background-color: #141414;
     /* Dark background color similar to Netflix */
     color: white;
@@ -14,7 +14,7 @@
     /* Center the profile section */
 }
 
-.checklist p {
+.checklist p, .previous-purchases p {
     width: 100%;
     padding: 12px;
     color: white;
@@ -36,10 +36,9 @@
 
 .checklist label.genre-name {
     font-size: 20px;
-    /* Optional: increase label font size for better readability */
 }
 
-.checklist h2, .names h2 {
+.checklist h2, .names h2, .previous-purchases h2 {
     color: rgb(194, 39, 39);
     text-align: center;
     font-size: 25px;
