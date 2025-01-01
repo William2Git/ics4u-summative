@@ -16,18 +16,18 @@ export const StoreProvider = ({ children }) => {
 	//prevents the page from rendering before the user object is obtained
 	const [loading, setLoading] = useState(true);
 
-	const [defaultGenre, setDefaultGenre] = useState(28);
-
 	useEffect(() => {
 		onAuthStateChanged(auth, user => {
 			if (user) {
+				//current user
 				setUser(user);
+				//current cart
 				const sessionCart = localStorage.getItem(user.uid);
 				if (sessionCart) {
 					setCart(Map(JSON.parse(sessionCart)));
 				}
-
-				const fetchData = async () => {
+				//previous purchases
+				const getPrevPurchases = async () => {
 					try {
 						const docRef = doc(firestore, "users", user.uid);
 						const data = await getDoc(docRef);
@@ -37,10 +37,28 @@ export const StoreProvider = ({ children }) => {
 							setPrevPurchases(prevCart);
 						}
 					} catch (error) {
-						alert("Error");
+						console.log(error);
+						alert("Cart error");
 					}
 				};
-				fetchData();
+				getPrevPurchases();
+				//selected genres
+				const getGenres = async () => {
+					try {
+						const docRef = doc(firestore, "users", `${user.uid}_genre`);
+						const data = await getDoc(docRef);
+						if (data.exists()) {
+							const genres = data.data().sortedGenres;
+							console.log(genres);
+							setChoices(genres);
+						}
+					} catch (error) {
+						console.log(error);
+						alert("Genre error");
+					}
+				};
+				getGenres();
+				
 			}
 			setLoading(false);
 		});
@@ -52,8 +70,7 @@ export const StoreProvider = ({ children }) => {
 
 	return (
 		<StoreContext.Provider value={{
-			cart, setCart, choices, setChoices, defaultGenre, setDefaultGenre,
-			user, setUser, prevPurchases, setPrevPurchases
+			cart, setCart, choices, setChoices, user, setUser, prevPurchases, setPrevPurchases
 		}}>
 			{children}
 		</StoreContext.Provider>

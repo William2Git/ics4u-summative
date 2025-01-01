@@ -6,7 +6,7 @@ import { useStoreContext } from "../context";
 import { updateProfile } from "firebase/auth";
 
 function SettingsView() {
-  const { choices, setChoices, setDefaultGenre, prevPurchases, cart } = useStoreContext();
+  const { choices, setChoices, prevPurchases, cart } = useStoreContext();
   const { user, setUser } = useStoreContext();
   const [fName, setfName] = useState(user.displayName.split(" ")[0]);
   const [lName, setlName] = useState(user.displayName.split(" ")[1]);
@@ -68,7 +68,6 @@ function SettingsView() {
       .sort((a, b) => a.genre.localeCompare(b.genre));
 
     setChoices(sortedGenres);
-    setDefaultGenre(sortedGenres[0].id);
     alert("Genres Have been updated!")
   }
 
@@ -123,7 +122,8 @@ function SettingsView() {
         </div>
         <div className="previous-purchases">
           <h2>Previous Purchases</h2>
-          {prevPurchases.entrySeq().map(([key, value]) => {
+          <div className="purchases">
+            {prevPurchases.entrySeq().map(([key, value]) => {
               return (
                 <div key={key}>
                   <li>{value.title}</li>
@@ -131,17 +131,7 @@ function SettingsView() {
                 </div>
               )
             })}
-          {/* {cart & cart.length >0 ? (
-            prevPurchases.entrySeq().map((purchase) => {
-              return (
-                <li key={purchase.id} style={{ cursor: 'pointer' }}>{purchase}</li>
-              );
-            })
-            
-          ):(
-            <p>No previous purchases</p>
-          )} */}
-          
+          </div>
         </div>
       </div>
       <Footer />

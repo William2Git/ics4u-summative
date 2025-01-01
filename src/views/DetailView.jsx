@@ -7,7 +7,7 @@ import { useStoreContext } from "../context";
 function DetailView() {
   const [movDetails, setMovDetails] = useState([]);
   const [production, setProduction] = useState([]);
-  const { user, cart, setCart } = useStoreContext();
+  const { user, cart, setCart, prevPurchases } = useStoreContext();
   const params = useParams();
 
   const addToCart = (id, title, poster) => {
@@ -65,11 +65,22 @@ function DetailView() {
     ));
   }
 
+  function setText(id) {
+    if (prevPurchases.has(id + "")) {
+      return "Purchased";
+    }
+    if (cart.has(id + "")) {
+      return "Added";
+    } else {
+      return "Buy";
+    }
+  }
+
   return (
     <div>
       <h4>{movDetails.original_title}</h4>
       <button onClick={() => addToCart(params.id, movDetails.original_title, movDetails.poster_path)}
-        className="buy-button">{cart.has(params.id + "") ? "Added" : "Buy"}</button>
+        className="buy-button">{setText(params.id)}</button>
       <p id="detail">Release Date: {movDetails.release_date}</p>
       <p id="detail">Runtime: {movDetails.runtime} mins</p>
       <p id="detail">Language: {movDetails.original_language}</p>

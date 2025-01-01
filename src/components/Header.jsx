@@ -6,8 +6,7 @@ import { auth } from '../firebase';
 
 function Header() {
   let navigate = useNavigate();
-  const { defaultGenre } = useStoreContext();
-  const { user, setUser } = useStoreContext();
+  const { user, setUser, choices } = useStoreContext();
 
   async function logout() {
     try {
@@ -22,7 +21,7 @@ function Header() {
 
   function movies() {
     if (user) {
-      return navigate(`/movies/genre/${defaultGenre}`);
+      return navigate(`/movies/genre/${choices[0].id}`);
     }
     return alert("Please log in before viewing available movies");
   }

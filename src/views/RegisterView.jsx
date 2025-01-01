@@ -8,10 +8,12 @@ import { useStoreContext } from "../context";
 import { Map } from 'immutable';
 import { createUserWithEmailAndPassword, updateProfile, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import { auth } from "../firebase";
+import { firestore } from "../firebase";
+import { doc, setDoc } from "firebase/firestore";
 
 function RegisterView() {
   const navigate = useNavigate();
-  const { setChoices, setDefaultGenre, setCart } = useStoreContext();
+  const { setChoices, setCart } = useStoreContext();
   const { user, setUser } = useStoreContext();
   const firstName = useRef('');
   const lastName = useRef('');
@@ -63,12 +65,13 @@ function RegisterView() {
       console.log(user);
 
       setChoices(sortedGenres);
-      setDefaultGenre(sortedGenres[0].id);
+      //adds genres to firestore
+      const docRef = doc(firestore, "users", `${user.uid}_genre`);
+      await setDoc(docRef, {sortedGenres});
       //resets cart to empty upon registration
       // setCart(Map());
 
       navigate(`/movies/genre/${sortedGenres[0].id}`);
-
       alert("Account Successfully Created")
 
     } catch (error) {
@@ -99,12 +102,10 @@ function RegisterView() {
       console.log(user);
 
       setChoices(sortedGenres);
-      setDefaultGenre(sortedGenres[0].id);
       //resets cart to empty upon registration
       // setCart(Map());
 
       navigate(`/movies/genre/${sortedGenres[0].id}`);
-
       alert("Account Successfully Created")
     } catch {
       alert("Error creating user with email and password!");
