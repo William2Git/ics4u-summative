@@ -4,10 +4,11 @@ import Footer from "../components/Footer.jsx";
 import { useState, useRef } from "react";
 import { useStoreContext } from "../context";
 import { updateProfile } from "firebase/auth";
+import { firestore } from "../firebase";
+import { doc, setDoc } from "firebase/firestore";
 
 function SettingsView() {
-  const { choices, setChoices, prevPurchases, cart } = useStoreContext();
-  const { user, setUser } = useStoreContext();
+  const { user, setUser, choices, setChoices, prevPurchases } = useStoreContext();
   const [fName, setfName] = useState(user.displayName.split(" ")[0]);
   const [lName, setlName] = useState(user.displayName.split(" ")[1]);
   const genres = [
@@ -53,7 +54,7 @@ function SettingsView() {
 
   }
 
-  function updateGenres() {
+  async function updateGenres() {
     const selectedGenres = Object.keys(checkboxesRef.current)
       .filter((genreId) => checkboxesRef.current[genreId].checked)
       .map(Number);
@@ -68,6 +69,9 @@ function SettingsView() {
       .sort((a, b) => a.genre.localeCompare(b.genre));
 
     setChoices(sortedGenres);
+    //writes genre changes to firestore
+    const docRef = doc(firestore, "users", `${user.uid}_genre`);
+    await setDoc(docRef, {sortedGenres});
     alert("Genres Have been updated!")
   }
 
@@ -80,7 +84,7 @@ function SettingsView() {
           {/* checks if the user signed in with google */}
           {user.emailVerified ? (
             <div className="names">
-              <h2>Your signed in with Google</h2>
+              <h2>You're signed in with Google</h2>
               <label>First Name:</label>
               <input type="text" value={fName} readOnly></input>
               <label>Last Name:</label>
@@ -102,7 +106,8 @@ function SettingsView() {
         <div className="checklist">
           <h2>Genres</h2>
           <p>Edit your 10 preferred genres</p>
-          {genres.map((item) => {
+          {choices && choices.length>0 ? (
+            genres.map((item) => {
             const isChecked = choices.some(choice => choice.id == item.id);
             return (
               <div key={item.id}>
@@ -116,7 +121,9 @@ function SettingsView() {
                 <label className="genre-name">{item.genre}</label>
               </div>
             );
-          })}
+          })):(
+            <p>Genres are loading</p>
+          )}
           <br></br>
           <button onClick={() => updateGenres()}>Update Your Genres</button>
         </div>

@@ -12,14 +12,6 @@ function GenreView() {
   const params = useParams();
   const navigate = useNavigate();
 
-  const addToCart = (id, title, poster) => {
-    setCart((prevCart) => {
-      const cart = prevCart.set(id + "", { title: title, url: poster });
-      localStorage.setItem(user.uid, JSON.stringify(cart.toJS()));
-      return cart;
-    });
-  }
-
   //this use effect provides new pages of posters for the SAME genre
   useEffect(() => {
     (async function getGenre() {
@@ -66,6 +58,14 @@ function GenreView() {
     } else {
       return "Buy";
     }
+  }
+
+  const addToCart = (id, title, poster) => {
+    setCart((prevCart) => {
+      const cart = prevCart.set(id + "", { title: title, url: poster });
+      localStorage.setItem(user.uid, JSON.stringify(cart.toJS()));
+      return cart;
+    });
   }
 
   return (
