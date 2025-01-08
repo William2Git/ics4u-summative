@@ -48,6 +48,7 @@ function SettingsView() {
 
       alert("Name has been successfully changed!");
     } catch (error) {
+      console.log(error);
       alert("Error updating first and last name");
     }
     console.log(user);

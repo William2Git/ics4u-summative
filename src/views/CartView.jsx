@@ -10,16 +10,13 @@ function CartView() {
   const { user, cart, setCart, prevPurchases, setPrevPurchases } = useStoreContext();
 
   const checkout = async () => {
-    setPrevPurchases(cart);
+    const newCart = prevPurchases.merge(cart);
+    setPrevPurchases(newCart);
     //adds cart to firestore
     const docRef = doc(firestore, "users", user.uid);
-    console.log(docRef);
-    console.log(firestore);
-    await setDoc(docRef, cart.toJS());
+    await setDoc(docRef, newCart.toJS());
     //removes from local storage and react context
     localStorage.removeItem(user.uid);
-    console.log(cart);
-    console.log(prevPurchases);
     setCart(Map());
     return alert("Thank you for your purchase!"); 
   }
