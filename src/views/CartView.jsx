@@ -21,8 +21,7 @@ function CartView() {
     console.log(cart);
     console.log(prevPurchases);
     setCart(Map());
-    
-    alert("Thank you for your purchase!");
+    return alert("Thank you for your purchase!"); 
   }
 
   return (

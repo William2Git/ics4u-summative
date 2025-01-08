@@ -10,14 +10,6 @@ function DetailView() {
   const { user, cart, setCart, prevPurchases } = useStoreContext();
   const params = useParams();
 
-  const addToCart = (id, title, poster) => {
-    setCart((prevCart) => {
-      const cart = prevCart.set(id+"", { title: title, url: poster });
-      localStorage.setItem(user.uid, JSON.stringify(cart.toJS()));
-      return cart;
-    });
-  }
-
   useEffect(() => {
     (async function getGenre() {
       const response = await axios.get(
@@ -74,6 +66,22 @@ function DetailView() {
     } else {
       return "Buy";
     }
+  }
+
+  const addToCart = (id, title, poster) => {
+    if (prevPurchases.has(id + "")) {
+      //cannot add an item that has already been purchased
+      return;
+    }
+    if (cart.has(id + "")) {
+      //cannot add an item that has already been added
+      return;
+    }
+    setCart((prevCart) => {
+      const cart = prevCart.set(id + "", { title: title, url: poster });
+      localStorage.setItem(user.uid, JSON.stringify(cart.toJS()));
+      return cart;
+    });
   }
 
   return (

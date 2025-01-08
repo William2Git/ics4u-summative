@@ -61,6 +61,14 @@ function GenreView() {
   }
 
   const addToCart = (id, title, poster) => {
+    if (prevPurchases.has(id + "")) {
+      //cannot add an item that has already been purchased
+      return;
+    }
+    if (cart.has(id + "")) {
+      //cannot add an item that has already been added
+      return;
+    }
     setCart((prevCart) => {
       const cart = prevCart.set(id + "", { title: title, url: poster });
       localStorage.setItem(user.uid, JSON.stringify(cart.toJS()));
