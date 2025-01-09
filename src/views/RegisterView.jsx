@@ -4,8 +4,6 @@ import Footer from "../components/Footer.jsx";
 import { useNavigate } from "react-router";
 import { useState, useRef } from "react";
 import { useStoreContext } from "../context";
-// I reset the cart to be empty upon user registration
-import { Map } from 'immutable';
 import { createUserWithEmailAndPassword, updateProfile, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import { auth } from "../firebase";
 import { firestore } from "../firebase";
@@ -13,7 +11,7 @@ import { doc, setDoc } from "firebase/firestore";
 
 function RegisterView() {
   const navigate = useNavigate();
-  const { setChoices, setCart } = useStoreContext();
+  const { setChoices } = useStoreContext();
   const { user, setUser } = useStoreContext();
   const firstName = useRef('');
   const lastName = useRef('');
@@ -68,8 +66,6 @@ function RegisterView() {
       //adds genres to firestore
       const docRef = doc(firestore, "users", `${user.uid}_genre`);
       await setDoc(docRef, {sortedGenres});
-      //resets cart to empty upon registration
-      // setCart(Map());
 
       navigate(`/movies/genre/${sortedGenres[0].id}`);
       alert("Account Successfully Created")
@@ -102,9 +98,9 @@ function RegisterView() {
       console.log(user);
 
       setChoices(sortedGenres);
-      //resets cart to empty upon registration
-      // setCart(Map());
-
+      //adds genres to firestore
+      const docRef = doc(firestore, "users", `${user.uid}_genre`);
+      await setDoc(docRef, {sortedGenres});
       navigate(`/movies/genre/${sortedGenres[0].id}`);
       alert("Account Successfully Created")
     } catch {

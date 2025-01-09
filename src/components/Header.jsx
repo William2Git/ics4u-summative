@@ -3,15 +3,18 @@ import { useNavigate } from "react-router";
 import { useStoreContext } from "../context";
 import { signOut } from "firebase/auth";
 import { auth } from '../firebase';
+import { Map } from 'immutable';
 
 function Header() {
   let navigate = useNavigate();
-  const { user, setUser, choices } = useStoreContext();
+  const { user, setUser, choices, setChoices, setPrevPurchases } = useStoreContext();
 
   async function logout() {
     try {
       await signOut(auth);
       setUser(null);
+      setChoices([]);
+      setPrevPurchases(Map());
       console.log(user);
       navigate("/login");
     } catch (error) {

@@ -6,22 +6,30 @@ import { useState } from 'react';
 import { useStoreContext } from "../context";
 import { signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
 import { auth } from '../firebase';
+import { firestore } from "../firebase";
+import { doc, getDoc } from "firebase/firestore";
 
 
 function LoginView() {
   let [email, setEmail] = useState("");
   let [pass, setPass] = useState("");
-  const { setUser } = useStoreContext();
+  const { setUser, choices } = useStoreContext();
   const navigate = useNavigate();
 
   async function loginByEmail(event) {
     event.preventDefault();
-
     try {
       const user = (await signInWithEmailAndPassword(auth, email, pass)).user;
       setUser(user);
-      navigate('/movies/genre/28');
-      
+      //need to pull genres from firestore to get the correct navigation page
+      //this is because the observer in index.jsx does not update quickly enough
+      const docRef = doc(firestore, "users", `${user.uid}_genre`);
+      const data = await getDoc(docRef);
+      if (data.exists()) {
+        const genres = data.data().sortedGenres;
+        navigate(`/movies/genre/${genres[0].id}`);
+      }
+
       console.log(user);
     } catch (error) {
       console.log(error);
@@ -33,7 +41,14 @@ function LoginView() {
     try {
       const user = (await signInWithPopup(auth, new GoogleAuthProvider())).user;
       setUser(user);
-      navigate('/movies/genre/28');
+      //need to pull genres from firestore to get the correct navigation page
+      //this is because the observer in index.jsx does not update quickly enough
+      const docRef = doc(firestore, "users", `${user.uid}_genre`);
+      const data = await getDoc(docRef);
+      if (data.exists()) {
+        const genres = data.data().sortedGenres;
+        navigate(`/movies/genre/${genres[0].id}`);
+      }
 
       console.log(user);
     } catch (error) {

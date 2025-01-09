@@ -25,6 +25,8 @@ export const StoreProvider = ({ children }) => {
 				const sessionCart = localStorage.getItem(user.uid);
 				if (sessionCart) {
 					setCart(Map(JSON.parse(sessionCart)));
+				} else {
+					setCart(Map());
 				}
 				//previous purchases
 				const getPrevPurchases = async () => {
@@ -35,6 +37,8 @@ export const StoreProvider = ({ children }) => {
 							const prevCart = Map(data.data());
 							console.log(prevCart);
 							setPrevPurchases(prevCart);
+						} else {
+							setPrevPurchases(Map());
 						}
 					} catch (error) {
 						console.log(error);
@@ -51,14 +55,14 @@ export const StoreProvider = ({ children }) => {
 							const genres = data.data().sortedGenres;
 							console.log(genres);
 							setChoices(genres);
-						}
+						} //genres has to exist so theres no else scenario
 					} catch (error) {
 						console.log(error);
 						alert("Genre error");
 					}
 				};
 				getGenres();
-				
+
 			}
 			setLoading(false);
 		});
