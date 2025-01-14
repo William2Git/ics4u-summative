@@ -71,7 +71,7 @@ function GenreView() {
     }
     setCart((prevCart) => {
       const cart = prevCart.set(id + "", { title: title, url: poster });
-      localStorage.setItem(user.uid, JSON.stringify(cart.toJS()));
+      localStorage.setItem(user.email, JSON.stringify(cart.toJS()));
       return cart;
     });
   }

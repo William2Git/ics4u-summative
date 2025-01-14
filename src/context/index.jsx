@@ -22,7 +22,7 @@ export const StoreProvider = ({ children }) => {
 				//current user
 				setUser(user);
 				//current cart
-				const sessionCart = localStorage.getItem(user.uid);
+				const sessionCart = localStorage.getItem(user.email);
 				if (sessionCart) {
 					setCart(Map(JSON.parse(sessionCart)));
 				} else {
@@ -31,7 +31,7 @@ export const StoreProvider = ({ children }) => {
 				//previous purchases
 				const getPrevPurchases = async () => {
 					try {
-						const docRef = doc(firestore, "users", user.uid);
+						const docRef = doc(firestore, "users", user.email);
 						const data = await getDoc(docRef);
 						if (data.exists()) {
 							const prevCart = Map(data.data());
@@ -49,7 +49,7 @@ export const StoreProvider = ({ children }) => {
 				//selected genres
 				const getGenres = async () => {
 					try {
-						const docRef = doc(firestore, "users", `${user.uid}_genre`);
+						const docRef = doc(firestore, "users", `${user.email}_genre`);
 						const data = await getDoc(docRef);
 						if (data.exists()) {
 							const genres = data.data().sortedGenres;

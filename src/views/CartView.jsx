@@ -13,10 +13,10 @@ function CartView() {
     const newCart = prevPurchases.merge(cart);
     setPrevPurchases(newCart);
     //adds cart to firestore
-    const docRef = doc(firestore, "users", user.uid);
+    const docRef = doc(firestore, "users", user.email);
     await setDoc(docRef, newCart.toJS());
     //removes from local storage and react context
-    localStorage.removeItem(user.uid);
+    localStorage.removeItem(user.email);
     setCart(Map());
     return alert("Thank you for your purchase!"); 
   }

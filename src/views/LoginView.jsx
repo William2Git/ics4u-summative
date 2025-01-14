@@ -23,7 +23,7 @@ function LoginView() {
       setUser(user);
       //need to pull genres from firestore to get the correct navigation page
       //this is because the observer in index.jsx does not update quickly enough
-      const docRef = doc(firestore, "users", `${user.uid}_genre`);
+      const docRef = doc(firestore, "users", `${user.email}_genre`);
       const data = await getDoc(docRef);
       if (data.exists()) {
         const genres = data.data().sortedGenres;
@@ -43,7 +43,7 @@ function LoginView() {
       setUser(user);
       //need to pull genres from firestore to get the correct navigation page
       //this is because the observer in index.jsx does not update quickly enough
-      const docRef = doc(firestore, "users", `${user.uid}_genre`);
+      const docRef = doc(firestore, "users", `${user.email}_genre`);
       const data = await getDoc(docRef);
       if (data.exists()) {
         const genres = data.data().sortedGenres;

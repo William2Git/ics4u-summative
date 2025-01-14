@@ -4,7 +4,6 @@ import Footer from "../components/Footer.jsx";
 import { useState, useRef } from "react";
 import { useStoreContext } from "../context";
 import { updateProfile, reauthenticateWithCredential, updatePassword, EmailAuthProvider } from "firebase/auth";
-import { auth } from "../firebase";
 import { firestore } from "../firebase";
 import { doc, setDoc } from "firebase/firestore";
 
@@ -75,7 +74,7 @@ function SettingsView() {
 
     setChoices(sortedGenres);
     //writes genre changes to firestore
-    const docRef = doc(firestore, "users", `${user.uid}_genre`);
+    const docRef = doc(firestore, "users", `${user.email}_genre`);
     await setDoc(docRef, { sortedGenres });
     alert("Genres Have been updated!")
   }
