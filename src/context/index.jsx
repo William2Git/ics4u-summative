@@ -34,7 +34,7 @@ export const StoreProvider = ({ children }) => {
 						const docRef = doc(firestore, "users", user.email);
 						const data = await getDoc(docRef);
 						if (data.exists()) {
-							const prevCart = Map(data.data());
+							const prevCart = Map(data.data().previous);
 							console.log(prevCart);
 							setPrevPurchases(prevCart);
 						} else {
@@ -49,7 +49,7 @@ export const StoreProvider = ({ children }) => {
 				//selected genres
 				const getGenres = async () => {
 					try {
-						const docRef = doc(firestore, "users", `${user.email}_genre`);
+						const docRef = doc(firestore, "users", user.email);
 						const data = await getDoc(docRef);
 						if (data.exists()) {
 							const genres = data.data().sortedGenres;

@@ -14,11 +14,21 @@ function CartView() {
     setPrevPurchases(newCart);
     //adds cart to firestore
     const docRef = doc(firestore, "users", user.email);
-    await setDoc(docRef, newCart.toJS());
+    await setDoc(docRef, { previous: newCart.toJS() });
     //removes from local storage and react context
     localStorage.removeItem(user.email);
     setCart(Map());
-    return alert("Thank you for your purchase!"); 
+    return alert("Thank you for your purchase!");
+  }
+
+  function removeItem(key) {
+    //updates local storage
+    setCart((prevCart) => {
+      const newCart = prevCart.delete(key);
+      localStorage.removeItem(user.email);
+      localStorage.setItem(user.email, JSON.stringify(newCart.toJS()));
+      return newCart;
+    });
   }
 
   return (
@@ -34,7 +44,7 @@ function CartView() {
                 <div className="cart-item" key={key}>
                   <h2>{value.title}</h2>
                   <img src={`https://image.tmdb.org/t/p/w500${value.url}`} height={"200px"} />
-                  <button onClick={() => setCart((prevCart) => prevCart.delete(key))}>Remove</button>
+                  <button onClick={() => removeItem(key)}>Remove</button>
                 </div>
               )
             })

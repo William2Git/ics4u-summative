@@ -74,7 +74,7 @@ function SettingsView() {
 
     setChoices(sortedGenres);
     //writes genre changes to firestore
-    const docRef = doc(firestore, "users", `${user.email}_genre`);
+    const docRef = doc(firestore, "users", user.email);
     await setDoc(docRef, { sortedGenres });
     alert("Genres Have been updated!")
   }
@@ -97,6 +97,7 @@ function SettingsView() {
 
     try {
       await updatePassword(user, newPass);
+      return alert("Password updated!");
     } catch (error) {
       return alert("Error changing passowrd");
     }
