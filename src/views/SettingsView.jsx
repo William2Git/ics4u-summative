@@ -137,7 +137,7 @@ function SettingsView() {
                 <input type="password" onChange={(event) => setNewPass(event.target.value)} required></input>
                 <label>Confirm New Password</label>
                 <input type="password" onChange={(event) => setConfirmPass(event.target.value)} required></input>
-                <button>Reauth test</button>
+                <button>Change Password</button>
               </form>
             </div>
           )}
