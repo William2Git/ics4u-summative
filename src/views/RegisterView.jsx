@@ -99,7 +99,7 @@ function RegisterView() {
 
       setChoices(sortedGenres);
       //adds genres to firestore
-      const docRef = doc(firestore, "users", `${user.email}_genre`);
+      const docRef = doc(firestore, "users", user.email);
       await setDoc(docRef, {sortedGenres});
       navigate(`/movies/genre/${sortedGenres[0].id}`);
       alert("Account Successfully Created")

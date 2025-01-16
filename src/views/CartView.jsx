@@ -7,14 +7,14 @@ import { doc, setDoc } from "firebase/firestore";
 import { Map } from 'immutable';
 
 function CartView() {
-  const { user, cart, setCart, prevPurchases, setPrevPurchases } = useStoreContext();
+  const { user, cart, setCart, prevPurchases, setPrevPurchases, choices } = useStoreContext();
 
   const checkout = async () => {
     const newCart = prevPurchases.merge(cart);
     setPrevPurchases(newCart);
     //adds cart to firestore
     const docRef = doc(firestore, "users", user.email);
-    await setDoc(docRef, { previous: newCart.toJS() });
+    await setDoc(docRef, {sortedGenres: choices, previous: newCart.toJS()});
     //removes from local storage and react context
     localStorage.removeItem(user.email);
     setCart(Map());

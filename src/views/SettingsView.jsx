@@ -75,7 +75,7 @@ function SettingsView() {
     setChoices(sortedGenres);
     //writes genre changes to firestore
     const docRef = doc(firestore, "users", user.email);
-    await setDoc(docRef, { sortedGenres });
+    await setDoc(docRef, { sortedGenres: sortedGenres, previous: prevPurchases.toJS() });
     alert("Genres Have been updated!")
   }
 
