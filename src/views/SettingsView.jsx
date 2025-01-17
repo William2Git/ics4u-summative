@@ -12,9 +12,9 @@ function SettingsView() {
   const { user, setUser, choices, setChoices, prevPurchases } = useStoreContext();
   const [fName, setfName] = useState(user.displayName.split(" ")[0]);
   const [lName, setlName] = useState(user.displayName.split(" ")[1]);
-  const [oldPass, setOldPass] = useState("");
-  const [newPass, setNewPass] = useState("");
-  const [confirmPass, setConfirmPass] = useState("");
+  const oldPass = useRef('');
+  const newPass = useRef('');
+  const confirmPass = useRef('');
   const genres = [
     { id: 28, genre: "Action" },
     { id: 12, genre: "Adventure" },
@@ -54,7 +54,6 @@ function SettingsView() {
 
       alert("Name has been successfully changed!");
     } catch (error) {
-      console.log(error);
       alert("Error updating first and last name");
     }
   }
@@ -82,25 +81,25 @@ function SettingsView() {
 
   async function changePassword(event) {
     event.preventDefault();
-    if (newPass != confirmPass) {
+    if (newPass.current.value != confirmPass.current.value) {
       return alert("Your new passwords do not match")
     }
 
     try {
       const credential = EmailAuthProvider.credential(
         user.email,
-        oldPass
+        oldPass.current.value
       )
       await reauthenticateWithCredential(user, credential);
-      setOldPass("");
-      setNewPass("");
-      setConfirmPass("");
     } catch (error) {
       return alert("Incorrect old password, please try again");
     }
 
     try {
-      await updatePassword(user, newPass);
+      await updatePassword(user, newPass.current.value);
+      oldPass.current.value = '';
+      newPass.current.value = '';
+      confirmPass.current.value = '';
       return alert("Password updated!");
     } catch (error) {
       return alert("Error changing passowrd");
@@ -170,11 +169,11 @@ function SettingsView() {
           <form className="password" onSubmit={(event) => { changePassword(event) }}>
             <h2>Change Password</h2>
             <label>Old Password</label>
-            <input type="password" onChange={(event) => setOldPass(event.target.value)} required></input>
+            <input type="password" ref={oldPass} required></input>
             <label>New Password</label>
-            <input type="password" onChange={(event) => setNewPass(event.target.value)} required></input>
+            <input type="password" ref={newPass} required></input>
             <label>Confirm New Password</label>
-            <input type="password" onChange={(event) => setConfirmPass(event.target.value)} required></input>
+            <input type="password" ref={confirmPass} required></input>
             <button>Change Password</button>
           </form>
         )}

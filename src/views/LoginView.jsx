@@ -27,10 +27,7 @@ function LoginView() {
       const data = await getDoc(docRef);
       const genres = data.data().sortedGenres;
       navigate(`/movies/genre/${genres[0].id}`);
-
-      console.log(user);
     } catch (error) {
-      console.log(error);
       alert("Invalid credentials, please try again");
     }
   }

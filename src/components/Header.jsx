@@ -15,7 +15,6 @@ function Header() {
       setUser(null);
       setChoices([]);
       setPrevPurchases(Map());
-      console.log(user);
       navigate("/login");
     } catch (error) {
       alert("Error signing out");

@@ -35,13 +35,11 @@ export const StoreProvider = ({ children }) => {
             const data = await getDoc(docRef);
             if (data.exists()) {
               const prevCart = Map(data.data().previous);
-              console.log(prevCart);
               setPrevPurchases(prevCart);
             } else {
               setPrevPurchases(Map());
             }
           } catch (error) {
-            console.log(error);
             alert("Cart error");
           }
         };
@@ -53,11 +51,9 @@ export const StoreProvider = ({ children }) => {
             const data = await getDoc(docRef);
             if (data.exists()) {
               const genres = data.data().sortedGenres;
-              console.log(genres);
               setChoices(genres);
             } //genres has to exist so theres no else scenario
           } catch (error) {
-            console.log(error);
             alert("Genre error");
           }
         };
