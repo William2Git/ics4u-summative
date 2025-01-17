@@ -6,6 +6,7 @@ import { useStoreContext } from "../context";
 import { updateProfile, reauthenticateWithCredential, updatePassword, EmailAuthProvider } from "firebase/auth";
 import { firestore } from "../firebase";
 import { doc, setDoc } from "firebase/firestore";
+import { auth } from "../firebase";
 
 function SettingsView() {
   const { user, setUser, choices, setChoices, prevPurchases } = useStoreContext();
@@ -40,9 +41,11 @@ function SettingsView() {
     }
 
     try {
-      await updateProfile(user, {
+      // makes sure that the user is up to date, allowing for the name change button to be used multiple times without refreshing the page
+      const currentUser = auth.currentUser;
+      await updateProfile(currentUser, {
         displayName: `${fName} ${lName}`,
-      })
+      });
 
       setUser((prevUser) => ({
         ...prevUser,
@@ -54,8 +57,6 @@ function SettingsView() {
       console.log(error);
       alert("Error updating first and last name");
     }
-    console.log(user);
-
   }
 
   async function updateGenres() {
@@ -91,6 +92,9 @@ function SettingsView() {
         oldPass
       )
       await reauthenticateWithCredential(user, credential);
+      setOldPass("");
+      setNewPass("");
+      setConfirmPass("");
     } catch (error) {
       return alert("Incorrect old password, please try again");
     }
@@ -176,7 +180,7 @@ function SettingsView() {
         )}
       </div>
       <br></br>
-      
+
       <div className="previous-purchases">
         <h2>Previous Purchases</h2>
         <div className="purchases">
