@@ -12,7 +12,7 @@ import { doc, setDoc } from "firebase/firestore";
 function RegisterView() {
   const navigate = useNavigate();
   const { setChoices } = useStoreContext();
-  const { user, setUser } = useStoreContext();
+  const { setUser } = useStoreContext();
   const firstName = useRef('');
   const lastName = useRef('');
   const email = useRef('');
@@ -39,7 +39,6 @@ function RegisterView() {
 
   const registerByEmail = async (event) => {
     event.preventDefault();
-
     try {
       if (password.current.value != checkPassword) {
         return alert("Passwords do not match. Please re-enter your password correctly");
@@ -60,8 +59,6 @@ function RegisterView() {
       const user = (await createUserWithEmailAndPassword(auth, email.current.value, password.current.value)).user;
       await updateProfile(user, { displayName: `${firstName.current.value} ${lastName.current.value}` });
       setUser(user);
-      console.log(user);
-
       setChoices(sortedGenres);
       //adds genres to firestore
       const docRef = doc(firestore, "users", user.email);
@@ -71,14 +68,11 @@ function RegisterView() {
       alert("Account Successfully Created")
 
     } catch (error) {
-      alert("Error creating user with email and password!");
-      console.log(error);
-      console.log(user);
+      alert("This email is already registered.");
     }
   };
 
   const registerByGoogle = async () => {
-
     const selectedGenres = Object.keys(checkboxesRef.current)
       .filter((genreId) => checkboxesRef.current[genreId].checked)
       .map(Number);
@@ -95,8 +89,6 @@ function RegisterView() {
     try {
       const user = (await signInWithPopup(auth, new GoogleAuthProvider())).user;
       setUser(user);
-      console.log(user);
-
       setChoices(sortedGenres);
       //adds genres to firestore
       const docRef = doc(firestore, "users", user.email);
@@ -104,7 +96,7 @@ function RegisterView() {
       navigate(`/movies/genre/${sortedGenres[0].id}`);
       alert("Account Successfully Created")
     } catch {
-      alert("Error creating user with email and password!");
+      alert("Error creating user with Google!");
     }
   }
 
@@ -133,7 +125,6 @@ function RegisterView() {
         <div className="genres-checklist">
           <h2>Genres</h2>
           <p>Please choose up to 10 preferred genres</p>
-
           {genres.map((item) => (
             <div key={item.id}>
               <input

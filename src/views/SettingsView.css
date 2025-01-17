@@ -1,18 +1,24 @@
 .profile,
-.checklist,
-.previous-purchases {
-    background-color: #141414;
-    /* Dark background color similar to Netflix */
+.previous-purchases,
+.password {
+    background-color: #161616;
     color: white;
-    /* White text for contrast */
     padding: 30px;
     border-radius: 10px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-    /* Subtle shadow for depth */
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.5); 
     max-width: 500px;
-    /* Restrict width */
     margin: 0 auto;
-    /* Center the profile section */
+}
+
+.checklist {
+    background-color: #161616; 
+    color: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.5);
+    max-width: 500px;
+    margin: 0 auto;
+    text-align: center;
 }
 
 .checklist p,
@@ -42,7 +48,8 @@
 
 .checklist h2,
 .names h2,
-.previous-purchases h2 {
+.previous-purchases h2,
+.password h2 {
     color: rgb(194, 39, 39);
     text-align: center;
     font-size: 25px;
@@ -50,10 +57,8 @@
 
 .profile h1 {
     font-size: 36px;
-    /* Big heading for the page title */
     font-weight: bold;
     margin-bottom: 20px;
-    /* Space between title and form */
     color: #e50914;
 }
 
@@ -62,7 +67,6 @@
 .password {
     display: flex;
     flex-direction: column;
-    /* Stack labels and inputs */
     gap: 15px;
 }
 
@@ -72,7 +76,6 @@
     font-size: 16px;
     font-weight: bold;
     color: #bbb;
-    /* Lighter text for labels */
 }
 
 .names input,
@@ -85,7 +88,6 @@
     background-color: #333;
     color: white;
     width: 100%;
-    /* Ensure inputs take full width */
     transition: border 0.3s ease;
 }
 
@@ -93,7 +95,6 @@
 .profile input:focus,
 .password input:focus {
     border-color: #e50914;
-    /* Highlight border on focus */
     outline: none;
 }
 
@@ -114,9 +115,9 @@
 }
 
 .names button:hover,
-.checklist button {
+.checklist button:hover,
+.password button:hover {
     background-color: #b20710;
-    /* Darker red when hovered */
 }
 
 .names button:focus,
@@ -127,16 +128,74 @@
 .names input[readonly] {
     background-color: #2e2e2e;
     cursor: not-allowed;
-    /* Show that this input is readonly */
 }
 
 .names input[readonly]:hover {
     border-color: #2e2e2e;
-    /* No hover effect on readonly input */
 }
 
 .settings {
     display: flex;
-    width: 1000px;
     margin: auto;
+    width: 80%;
+}
+
+.previous-purchases {
+    background-color: #161616;
+    color: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.5);
+    max-width: 1200px;
+    margin: 20px auto;
+}
+
+.previous-purchases h2 {
+    color: #e50914;
+    text-align: center;
+    font-size: 28px;
+    margin-bottom: 20px;
+    font-weight: bold;
+}
+
+.previous-purchases .purchases {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.previous-purchases .purchases div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #1c1c1c;
+    padding: 15px;
+    border-radius: 8px;
+    width: 180px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.previous-purchases .purchases div:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.6);
+}
+
+.previous-purchases .purchases img {
+    border-radius: 5px;
+    margin-top: 10px;
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+}
+
+.previous-purchases .purchases li {
+    list-style: none;
+    font-size: 16px;
+    color: #ddd;
+    text-align: center;
+    margin-top: 10px;
+    font-weight: bold;
 }

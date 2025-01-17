@@ -14,7 +14,7 @@ function CartView() {
     setPrevPurchases(newCart);
     //adds cart to firestore
     const docRef = doc(firestore, "users", user.email);
-    await setDoc(docRef, {sortedGenres: choices, previous: newCart.toJS()});
+    await setDoc(docRef, { sortedGenres: choices, previous: newCart.toJS() });
     //removes from local storage and react context
     localStorage.removeItem(user.email);
     setCart(Map());
@@ -35,7 +35,7 @@ function CartView() {
     <div>
       <Header />
       <div className="cart-view">
-        <h1>Cart</h1>
+        <h1>Shopping Cart & Checkout</h1>
         <button id="checkout" onClick={() => checkout()}>Checkout</button>
         <div className="cart-items">
           {

@@ -108,6 +108,7 @@ function SettingsView() {
     <div>
       <Header />
       <h1>User Settings</h1>
+      <br></br>
       <div className="settings">
         <div className="profile">
           {/* checks if the user signed in with google */}
@@ -120,30 +121,19 @@ function SettingsView() {
               <input type="text" value={lName} readOnly></input>
             </div>
           ) : (
-            <div>
-              <form className="names" onSubmit={(event) => { changeName(event) }}>
-                <label>First Name:</label>
-                <input type="text" value={fName} onChange={(event) => setfName(event.target.value)} required></input>
-                <label>Last Name:</label>
-                <input type="text" value={lName} onChange={(event) => setlName(event.target.value)} required></input>
-                <button>Change First Name or Last Name</button>
-              </form>
-              <br></br>
-
-              <form className="password" onSubmit={(event) => { changePassword(event) }}>
-                <label>Old Password</label>
-                <input type="password" onChange={(event) => setOldPass(event.target.value)} required></input>
-                <label>New Password</label>
-                <input type="password" onChange={(event) => setNewPass(event.target.value)} required></input>
-                <label>Confirm New Password</label>
-                <input type="password" onChange={(event) => setConfirmPass(event.target.value)} required></input>
-                <button>Change Password</button>
-              </form>
-            </div>
+            <form className="names" onSubmit={(event) => { changeName(event) }}>
+              <h2>Profile</h2>
+              <label>First Name:</label>
+              <input type="text" value={fName} onChange={(event) => setfName(event.target.value)} required></input>
+              <label>Last Name:</label>
+              <input type="text" value={lName} onChange={(event) => setlName(event.target.value)} required></input>
+              <button>Change First Name or Last Name</button>
+            </form>
           )}
           <label>Email:</label>
           <input type="email" style={{ cursor: "no-drop" }} value={user.email} readOnly ></input>
         </div>
+
         <div className="checklist">
           <h2>Genres</h2>
           <p>Edit your 10 preferred genres</p>
@@ -168,20 +158,39 @@ function SettingsView() {
           <br></br>
           <button onClick={() => updateGenres()}>Update Your Genres</button>
         </div>
-        <div className="previous-purchases">
-          <h2>Previous Purchases</h2>
-          <div className="purchases">
-            {prevPurchases.entrySeq().map(([key, value]) => {
-              return (
-                <div key={key}>
-                  <li>{value.title}</li>
-                  <img src={`https://image.tmdb.org/t/p/w500${value.url}`} height={"200px"} />
-                </div>
-              )
-            })}
-          </div>
+
+        {/* Password change for login with email users */}
+        {user.emailVerified ? (
+          <></>
+        ) : (
+          <form className="password" onSubmit={(event) => { changePassword(event) }}>
+            <h2>Change Password</h2>
+            <label>Old Password</label>
+            <input type="password" onChange={(event) => setOldPass(event.target.value)} required></input>
+            <label>New Password</label>
+            <input type="password" onChange={(event) => setNewPass(event.target.value)} required></input>
+            <label>Confirm New Password</label>
+            <input type="password" onChange={(event) => setConfirmPass(event.target.value)} required></input>
+            <button>Change Password</button>
+          </form>
+        )}
+      </div>
+      <br></br>
+      
+      <div className="previous-purchases">
+        <h2>Previous Purchases</h2>
+        <div className="purchases">
+          {prevPurchases.entrySeq().map(([key, value]) => {
+            return (
+              <div key={key}>
+                <li>{value.title}</li>
+                <img src={`https://image.tmdb.org/t/p/w500${value.url}`} height={"200px"} />
+              </div>
+            )
+          })}
         </div>
       </div>
+      <br></br>
       <Footer />
     </div>
   );
