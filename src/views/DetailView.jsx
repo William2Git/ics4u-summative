@@ -94,7 +94,6 @@ function DetailView() {
       <p id="detail">Language: {movDetails.original_language}</p>
       <p id="detail">Production Companies: {getCompanies()}</p>
       <p id="detail">Description: {movDetails.overview}</p>
-
       <img id="poster" src={`https://image.tmdb.org/t/p/w500${movDetails.poster_path}`} />
 
       <div className="trailers-section">

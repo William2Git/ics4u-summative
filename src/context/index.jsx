@@ -28,12 +28,14 @@ export const StoreProvider = ({ children }) => {
         } else {
           setCart(Map());
         }
-        //previous purchases
-        const getPrevPurchases = async () => {
+        //genres and previous purchases
+        const getInfo = async () => {
           try {
             const docRef = doc(firestore, "users", user.email);
             const data = await getDoc(docRef);
             if (data.exists()) {
+              const genres = data.data().sortedGenres;
+              setChoices(genres);
               const prevCart = Map(data.data().previous);
               setPrevPurchases(prevCart);
             } else {
@@ -43,22 +45,7 @@ export const StoreProvider = ({ children }) => {
             alert("Cart error");
           }
         };
-        getPrevPurchases();
-        //selected genres
-        const getGenres = async () => {
-          try {
-            const docRef = doc(firestore, "users", user.email);
-            const data = await getDoc(docRef);
-            if (data.exists()) {
-              const genres = data.data().sortedGenres;
-              setChoices(genres);
-            } //genres has to exist so theres no else scenario
-          } catch (error) {
-            alert("Genre error");
-          }
-        };
-        getGenres();
-
+        getInfo();
       }
       setLoading(false);
     });

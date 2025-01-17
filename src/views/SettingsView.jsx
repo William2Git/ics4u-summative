@@ -81,22 +81,23 @@ function SettingsView() {
 
   async function changePassword(event) {
     event.preventDefault();
+    const currentUser = auth.currentUser;
     if (newPass.current.value != confirmPass.current.value) {
       return alert("Your new passwords do not match")
     }
 
     try {
       const credential = EmailAuthProvider.credential(
-        user.email,
+        currentUser.email,
         oldPass.current.value
       )
-      await reauthenticateWithCredential(user, credential);
+      await reauthenticateWithCredential(currentUser, credential);
     } catch (error) {
       return alert("Incorrect old password, please try again");
     }
 
     try {
-      await updatePassword(user, newPass.current.value);
+      await updatePassword(currentUser, newPass.current.value);
       oldPass.current.value = '';
       newPass.current.value = '';
       confirmPass.current.value = '';
@@ -104,7 +105,6 @@ function SettingsView() {
     } catch (error) {
       return alert("Error changing passowrd");
     }
-
   }
 
   return (

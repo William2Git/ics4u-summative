@@ -10,6 +10,10 @@ function CartView() {
   const { user, cart, setCart, prevPurchases, setPrevPurchases, choices } = useStoreContext();
 
   const checkout = async () => {
+    if (cart.size <= 0) {
+      return alert("Please add something to your cart!");
+    }
+    
     const newCart = prevPurchases.merge(cart);
     setPrevPurchases(newCart);
     //adds cart to firestore
@@ -38,23 +42,21 @@ function CartView() {
         <h1>Shopping Cart & Checkout</h1>
         <button id="checkout" onClick={() => checkout()}>Checkout</button>
         <div className="cart-items">
-          {
-            cart.entrySeq().map(([key, value]) => {
-              return (
-                <div className="cart-item" key={key}>
-                  <h2>{value.title}</h2>
-                  <img src={`https://image.tmdb.org/t/p/w500${value.url}`} height={"200px"} />
-                  <button onClick={() => removeItem(key)}>Remove</button>
-                </div>
-              )
-            })
+          {cart.entrySeq().map(([key, value]) => {
+            return (
+              <div className="cart-item" key={key}>
+                <h2>{value.title}</h2>
+                <img src={`https://image.tmdb.org/t/p/w500${value.url}`} height={"200px"} />
+                <button onClick={() => removeItem(key)}>Remove</button>
+              </div>
+            )
+          })
           }
         </div>
       </div>
       <br></br>
       <Footer />
     </div>
-
   );
 }
 

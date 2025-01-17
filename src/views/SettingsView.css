@@ -5,13 +5,13 @@
     color: white;
     padding: 30px;
     border-radius: 10px;
-    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.5); 
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.5);
     max-width: 500px;
     margin: 0 auto;
 }
 
 .checklist {
-    background-color: #161616; 
+    background-color: #161616;
     color: white;
     padding: 30px;
     border-radius: 10px;
@@ -137,7 +137,6 @@
 .settings {
     display: flex;
     margin: auto;
-    width: 80%;
 }
 
 .previous-purchases {
@@ -146,7 +145,7 @@
     padding: 30px;
     border-radius: 10px;
     box-shadow: 0 6px 15px rgba(0, 0, 0, 0.5);
-    max-width: 1200px;
+    max-width: 1000px;
     margin: 20px auto;
 }
 

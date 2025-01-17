@@ -53,6 +53,7 @@ function GenreView() {
     if (prevPurchases.has(id + "")) {
       return "Purchased";
     }
+
     if (cart.has(id + "")) {
       return "Added";
     } else {
@@ -65,10 +66,12 @@ function GenreView() {
       //cannot add an item that has already been purchased
       return;
     }
+
     if (cart.has(id + "")) {
       //cannot add an item that has already been added
       return;
     }
+    
     setCart((prevCart) => {
       const cart = prevCart.set(id + "", { title: title, url: poster });
       localStorage.setItem(user.email, JSON.stringify(cart.toJS()));

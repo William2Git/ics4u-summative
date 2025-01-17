@@ -62,10 +62,9 @@ function RegisterView() {
       setChoices(sortedGenres);
       //adds genres to firestore
       const docRef = doc(firestore, "users", user.email);
-      await setDoc(docRef, {sortedGenres});
-
+      await setDoc(docRef, { sortedGenres });
       navigate(`/movies/genre/${sortedGenres[0].id}`);
-      alert("Account Successfully Created")
+      alert("Account Successfully Created");
 
     } catch (error) {
       alert("This email is already registered.");
@@ -92,9 +91,10 @@ function RegisterView() {
       setChoices(sortedGenres);
       //adds genres to firestore
       const docRef = doc(firestore, "users", user.email);
-      await setDoc(docRef, {sortedGenres});
+      await setDoc(docRef, { sortedGenres });
       navigate(`/movies/genre/${sortedGenres[0].id}`);
-      alert("Account Successfully Created")
+      alert("Account Successfully Created");
+
     } catch {
       alert("Error creating user with Google!");
     }

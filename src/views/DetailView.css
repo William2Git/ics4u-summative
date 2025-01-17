@@ -12,7 +12,6 @@ h4 {
     color: #fff;
 }
 
-/* Movie Details Section */
 #detail {
     font-size: 1rem;
     margin-bottom: 8px;
@@ -26,36 +25,30 @@ h4 {
     margin-top: 20px;
 }
 
-/* Release Date */
 #detail:nth-of-type(1) {
     font-weight: bold;
     color: #fff;
 }
 
-/* Runtime */
 #detail:nth-of-type(2) {
     color: #e50914;
 }
 
-/* Language */
 #detail:nth-of-type(3) {
     color: #b3b3b3;
 }
 
-/* Production Companies */
 #detail:nth-of-type(4) {
     font-style: italic;
     color: #999;
 }
 
-/* Description */
 #detail:nth-of-type(5) {
     font-size: 1.1rem;
     color: #fff;
     width: 900px;
 }
 
-/* Trailers Section */
 .trailers-section {
     margin-top: 40px;
 }
@@ -67,14 +60,12 @@ h4 {
     color: #fff;
 }
 
-/* Trailers Grid Layout */
 .trailers-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
     gap: 30px;
 }
 
-/* Individual Trailer Tile */
 .trailer-tile {
     position: relative;
     background-color: #333;
@@ -89,7 +80,6 @@ h4 {
     transform: scale(1.05);
 }
 
-/* Trailer Thumbnail Image */
 .trailer-thumbnail {
     width: 100%;
     height: 100%;
@@ -97,7 +87,6 @@ h4 {
     border-radius: 8px;
 }
 
-/* Trailer Name Overlay */
 .trailer-tile h3 {
     position: absolute;
     bottom: 10px;
