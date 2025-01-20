@@ -7,7 +7,8 @@ import { useStoreContext } from "../context";
 import { createUserWithEmailAndPassword, updateProfile, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import { auth } from "../firebase";
 import { firestore } from "../firebase";
-import { doc, setDoc } from "firebase/firestore";
+import { doc, setDoc, getDoc } from "firebase/firestore";
+import { signOut } from "firebase/auth";
 
 function RegisterView() {
   const navigate = useNavigate();
@@ -87,10 +88,20 @@ function RegisterView() {
 
     try {
       const user = (await signInWithPopup(auth, new GoogleAuthProvider())).user;
+      const docRef = doc(firestore, "users", user.email);
+      const data = await getDoc(docRef);
+      if (data.exists()) {
+        //the sign out function is called b/c google auth signs them in, 
+        //but once it is detected the account already exists, they get signed out and no new genres are set (no new account creation)
+        //if the google account already exists, the user must go to login
+        setUser(null);
+        await signOut(auth);
+        return alert("You already registered with this google account!");
+      }
+
       setUser(user);
       setChoices(sortedGenres);
       //adds genres to firestore
-      const docRef = doc(firestore, "users", user.email);
       await setDoc(docRef, { sortedGenres });
       navigate(`/movies/genre/${sortedGenres[0].id}`);
       alert("Account Successfully Created");
